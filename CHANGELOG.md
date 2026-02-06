@@ -6,6 +6,78 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [v0.2.1] - 2026-02-06 — Dependency Upgrade
+
+### Changed
+- **flutter_blue_plus** 1.36.8 → 2.1.0 (license param, no API changes)
+- **nfc_manager** 3.5.0 → 4.1.1 (heavy breaking changes — see below)
+- **permission_handler** 11.4.0 → 12.0.1 (compileSdkVersion 35, Java 17)
+- **simple_icons** 10.1.3 → 14.6.1 (Microsoft icon removed by legal request)
+
+### Added
+- `nfc_manager_ndef` ^1.1.0 — cross-platform NDEF abstraction (extracted from nfc_manager 4.x)
+- `ndef_record` ^1.4.1 — NdefRecord/NdefMessage/TypeNameFormat classes
+- Manual `_createTextRecord()` and `_createUriRecord()` helpers in `nfc_service.dart` (replace removed factory constructors)
+
+### Removed
+- `hive_generator` and `build_runner` dev dependencies (unused — no Hive adapters to generate)
+- 30+ transitive dependencies cleaned up
+
+### Fixed
+- `nfc_service.dart`: migrated to nfc_manager 4.x API — `checkAvailability()`, `pollingOptions`, `onSessionErrorIos`, `NdefMessage(records:)`, `ndef.write(message:)`
+- `ble_service.dart`, `device_detail_screen.dart`, `device_probe_service.dart`: added required `license: License.free` param for flutter_blue_plus 2.x `connect()`
+- `brand_icons.dart`: replaced removed `SimpleIcons.microsoft` with hardcoded brand color
+
+### Notes
+- Remaining 6 incompatible transitive packages are SDK/framework-level (characters, matcher, material_color_utilities, meta, objective_c, test_api) — will resolve with next Flutter SDK update
+- 93 tests passing, 0 analysis issues
+
+---
+
+## [v0.2.0] - 2026-02-06 — Dark Mode, Device Detail Screen, App Icon
+
+### Added
+- **Dark mode toggle** — cycle button in app bar (system → light → dark), persisted in Hive
+  - `lib/services/theme_service.dart`: ValueNotifier-based service with Hive persistence
+  - `lib/constants/app_constants.dart`: Added `HiveBoxNames.settings` and `SettingsKeys.themeMode`
+- **Device detail screen** (`lib/screens/device_detail_screen.dart`):
+  - Connects to BLE device, discovers GATT services and characteristics
+  - Browse services with known service name labels (Device Info, Heart Rate, Battery, etc.)
+  - Read characteristic values (hex, UTF-8, UInt16/32 display)
+  - Write characteristics (hex or UTF-8 input)
+  - Subscribe/unsubscribe to notifications (live value updates)
+  - Known characteristic name labels (Device Name, Battery Level, Firmware Revision, etc.)
+  - Auto-disconnect on back navigation
+- **Custom app icon** — branded "N" on primary blue (#1E384B) with orange accent
+  - Generated via `flutter_launcher_icons` for iOS and Android (including adaptive icons)
+  - `assets/icon.png`: 1024x1024 source icon
+
+### Changed
+- **`lib/screens/home_screen.dart`**: "Connect" button now navigates to device detail screen instead of connecting in-place
+- **`lib/main.dart`**: `MyApp` uses `ValueListenableBuilder` for reactive theme switching; opens settings Hive box
+
+### Notes
+- All code passes `flutter analyze` with zero issues
+- `flutter test` — 93 tests passing
+- Version bumped to 0.2.0 (new features: dark mode, device detail screen)
+
+---
+
+## [v0.1.1] - 2026-02-06 — Unit Tests for Decoders & Sort Logic
+
+### Added
+- **`test/thermobeacon_test.dart`** — 13 tests: payload decode, sanity checks, battery curve, uptime formatting, edge cases (short payload, out-of-range values, negative temps)
+- **`test/apple_continuity_test.dart`** — 19 tests: all TLV types, AirPods/Beats model lookup, priority resolution (most specific wins), malformed/truncated payloads
+- **`test/ble_manufacturer_test.dart`** — 30 tests: company ID lookup, name-based identification, TV detection edge cases, earphone/phone disambiguation, service UUID matching, BleDeviceInfo displayLabel/isIdentified
+- **`test/sort_hysteresis_test.dart`** — 9 tests: hysteresis threshold math, boundary conditions, multi-device independence, stable value tracking after update
+
+### Notes
+- 93 tests total, all passing
+- `flutter analyze` — 0 issues
+- Covers pure logic only (decoders, sort) — no widget or hardware mocking
+
+---
+
 ## [v0.1.0] - 2026-02-06 — Initial Release
 
 ### Summary

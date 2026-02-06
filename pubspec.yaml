@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 0.1.0+1
+version: 0.2.1+4
 
 environment:
   sdk: ^3.10.8
@@ -36,16 +36,18 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   # BLE (Bluetooth Low Energy) support
-  flutter_blue_plus: ^1.35.10
+  flutter_blue_plus: ^2.1.0
 
   # Permission handling
-  permission_handler: ^11.3.1
+  permission_handler: ^12.0.1
 
   # NFC (Near Field Communication) support
-  nfc_manager: ^3.5.0
+  nfc_manager: ^4.1.1
+  nfc_manager_ndef: ^1.1.0
+  ndef_record: ^1.4.1
 
   # Brand/manufacturer SVG icons
-  simple_icons: ^10.1.0
+  simple_icons: ^14.6.1
 
   # Local device cache
   hive: ^2.2.3
@@ -62,12 +64,9 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
 
-  # Hive code generation
-  hive_generator: ^2.0.1
-  build_runner: ^2.4.8
-
   # Native splash screen generation
   flutter_native_splash: ^2.4.0
+  flutter_launcher_icons: ^0.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -110,6 +109,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+# App icon configuration
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon.png"
+  adaptive_icon_background: "#1E384B"
+  adaptive_icon_foreground: "assets/icon.png"
 
 # Native splash screen configuration
 flutter_native_splash:

@@ -29,7 +29,6 @@ class BrandIcons {
     'Amazon': SimpleIcons.amazon,
     'Sonos': SimpleIcons.sonos,
     'Philips': SimpleIcons.philipshue,
-    'Microsoft': SimpleIcons.microsoft,
     'Logitech': SimpleIcons.logitech,
     'JBL': SimpleIcons.jbl,
   };
@@ -92,7 +91,7 @@ class BrandIcons {
     'Amazon': Color(0xFFFF9900),
     'Sonos': Color(0xFF333333),
     'Philips': SimpleIconColors.philipshue,
-    'Microsoft': SimpleIconColors.microsoft,
+    'Microsoft': Color(0xFF737373),
     'Logitech': SimpleIconColors.logitech,
     'JBL': SimpleIconColors.jbl,
     'ThermoBeacon': Color(0xFFFF5722), // deepOrange

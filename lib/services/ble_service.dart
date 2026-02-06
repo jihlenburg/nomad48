@@ -111,6 +111,7 @@ class BleService {
   Future<void> connectToDevice(BluetoothDevice device) async {
     try {
       await device.connect(
+        license: License.free,
         timeout: const Duration(seconds: 30),
         autoConnect: false,
       );

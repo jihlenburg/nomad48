@@ -258,7 +258,7 @@ This project uses **semantic versioning** (`MAJOR.MINOR.PATCH+BUILD`) in `pubspe
 - **Never bump MAJOR** without explicit user approval
 
 ### Current Version
-- `0.1.0+1` — Initial feature-complete BLE scanner with device identification, sort stability, and RSSI hysteresis
+- `0.2.0+3` — Dark mode toggle, device detail screen, custom app icon
 
 ## Git Workflow
 

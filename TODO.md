@@ -23,7 +23,6 @@ Last Updated: 2026-02-06
 - [ ] Create custom NDEF record types for NOMAD48-specific data
 
 ### Low Priority
-- [ ] Add dark mode support
 - [ ] Implement app settings screen
 - [ ] Add BLE scan filters (RSSI threshold, service UUIDs)
 - [ ] Create onboarding tutorial for first-time users
@@ -32,6 +31,13 @@ Last Updated: 2026-02-06
 - [ ] Add unit tests for BLE service
 - [ ] Add unit tests for NFC service
 - [ ] Add widget tests for main screens
+
+### Unit Tests for Decoders & Sort Logic (2026-02-06)
+- [x] ThermoBeacon decode tests (13 tests)
+- [x] Apple Continuity TLV decoder tests (19 tests)
+- [x] BLE manufacturer identification tests (30 tests)
+- [x] RSSI sort hysteresis tests (9 tests)
+- [x] 93 total tests, all passing
 - [ ] Implement analytics (privacy-respecting)
 - [ ] Add multi-language support (i18n)
 - [ ] Create app icon
@@ -104,6 +110,12 @@ _No blocked tasks_
 - [x] Removed `shouldExpand` heuristic — all cards start collapsed, user choice persisted
 - [x] Cleaned up unused `hasPayload` parameter
 
+### Dark Mode, Device Detail Screen, App Icon (2026-02-06)
+- [x] Dark mode toggle — system/light/dark cycle button in app bar, Hive-persisted
+- [x] Device detail screen — GATT service/characteristic browser with read/write/notify
+- [x] Custom branded app icon (N + orange accent on primary blue)
+- [x] flutter_launcher_icons for iOS + Android adaptive icons
+
 ### Fix Jumpy List Sort: Stable Sort + RSSI Hysteresis (2026-02-06)
 - [x] Fixed unstable sort — added `remoteId` tiebreaker for equal tier+RSSI
 - [x] Added 5 dBm RSSI hysteresis — sort position only updates on genuine signal changes
@@ -114,6 +126,14 @@ _No blocked tasks_
 - [x] Fixed _sortAndCacheResults() clearing cache every scan cycle
 - [x] Cache now persists across cycles, only prunes stale entries
 - [x] Reduced debug log noise (only logs new or re-identified devices)
+
+### Dependency Upgrade (2026-02-06)
+- [x] flutter_blue_plus 1.36.8 → 2.1.0 (added `license: License.free` to all `connect()` calls)
+- [x] nfc_manager 3.5.0 → 4.1.1 + nfc_manager_ndef 1.1.0 + ndef_record 1.4.1
+- [x] permission_handler 11.4.0 → 12.0.1
+- [x] simple_icons 10.1.3 → 14.6.1 (Microsoft icon removed, replaced with hardcoded color)
+- [x] Removed hive_generator + build_runner dev deps (30+ transitive deps cleaned)
+- [x] 93 tests passing, 0 analysis issues
 
 ### Full Codebase Refactor (2026-02-06)
 - [x] Removed unused `provider` dependency

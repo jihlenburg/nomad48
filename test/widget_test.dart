@@ -11,6 +11,7 @@ void main() {
     Hive.registerAdapter(CachedDeviceIdentificationAdapter());
     await Hive.openBox<CachedDeviceIdentification>('device_cache');
     await Hive.openBox<bool>('expansion_state');
+    await Hive.openBox<int>('settings');
   });
 
   tearDown(() async {

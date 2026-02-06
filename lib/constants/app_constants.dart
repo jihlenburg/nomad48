@@ -42,6 +42,13 @@ class HiveBoxNames {
 
   static const String deviceCache = 'device_cache';
   static const String expansionState = 'expansion_state';
+  static const String settings = 'settings';
+}
+
+class SettingsKeys {
+  SettingsKeys._();
+
+  static const String themeMode = 'theme_mode';
 }
 
 class CacheConstants {

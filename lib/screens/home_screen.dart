@@ -11,6 +11,7 @@ import '../services/expansion_state_service.dart';
 import '../widgets/identified_device_card.dart';
 import '../widgets/thermobeacon_card.dart';
 import '../widgets/unknown_device_group.dart';
+import 'device_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -86,21 +87,13 @@ class _HomeScreenState extends State<HomeScreen> {
     await _bleService.stopScan();
   }
 
-  Future<void> _connectToDevice(BluetoothDevice device) async {
-    try {
-      await _bleService.connectToDevice(device);
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Connected to ${device.platformName}')),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to connect: $e')),
-        );
-      }
-    }
+  void _openDeviceDetail(BluetoothDevice device) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => DeviceDetailScreen(device: device),
+      ),
+    );
   }
 
   // -- Probe --
@@ -231,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isExpanded: _expansionService.getOrDefault(device.remoteId.str),
         onExpansionChanged: (expanded) =>
             _expansionService.set(device.remoteId.str, expanded),
-        onConnect: () => _connectToDevice(device),
+        onConnect: () => _openDeviceDetail(device),
       );
     }
 
@@ -256,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
       isExpanded: _expansionService.getOrDefault(device.remoteId.str),
       onExpansionChanged: (expanded) =>
           _expansionService.set(device.remoteId.str, expanded),
-      onConnect: () => _connectToDevice(device),
+      onConnect: () => _openDeviceDetail(device),
     );
   }
 

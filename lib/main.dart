@@ -4,6 +4,7 @@ import 'constants/app_constants.dart';
 import 'models/cached_device.dart';
 import 'screens/home_screen.dart';
 import 'screens/nfc_screen.dart';
+import 'services/theme_service.dart';
 import 'theme/app_theme.dart';
 
 void main() async {
@@ -12,6 +13,7 @@ void main() async {
   Hive.registerAdapter(CachedDeviceIdentificationAdapter());
   await Hive.openBox<CachedDeviceIdentification>(HiveBoxNames.deviceCache);
   await Hive.openBox<bool>(HiveBoxNames.expansionState);
+  await Hive.openBox<int>(HiveBoxNames.settings);
   runApp(const MyApp());
 }
 
@@ -20,12 +22,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'NOMAD48',
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
-      home: const MainScreen(),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: ThemeService.instance,
+      builder: (context, themeMode, _) {
+        return MaterialApp(
+          title: 'NOMAD48',
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          themeMode: themeMode,
+          home: const MainScreen(),
+        );
+      },
     );
   }
 }
@@ -40,6 +47,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final _themeService = ThemeService.instance;
 
   @override
   void initState() {
@@ -58,6 +66,18 @@ class _MainScreenState extends State<MainScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text('NOMAD48'),
+        actions: [
+          ValueListenableBuilder<ThemeMode>(
+            valueListenable: _themeService,
+            builder: (context, mode, _) {
+              return IconButton(
+                icon: Icon(_themeService.icon),
+                tooltip: 'Theme: ${_themeService.label}',
+                onPressed: _themeService.cycle,
+              );
+            },
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
           tabs: const [

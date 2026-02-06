@@ -42,7 +42,7 @@ class DeviceProbeService {
 
     try {
       // Connect
-      await device.connect(timeout: _connectTimeout, autoConnect: false);
+      await device.connect(license: License.free, timeout: _connectTimeout, autoConnect: false);
 
       // Discover services
       final services = await device.discoverServices();
